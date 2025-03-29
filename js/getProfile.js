@@ -1,5 +1,6 @@
 export async function getProfile() {
-  const url = "https://0164-102-89-23-128.ngrok-free.app/api/profile";
+  const baseUrl = "https://0164-102-89-23-128.ngrok-free.app";
+  const url = `${baseUrl}/api/profile`;
 
   const token = localStorage.getItem("authToken");
 

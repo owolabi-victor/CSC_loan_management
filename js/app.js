@@ -29,7 +29,7 @@ const inputElement = document.getElementById("userName");
 const balancelement = document.getElementById("balanceText");
 
 if (inputElement) {
-  inputElement.innerHTML = "New Value";
+  inputElement.innerHTML = localStorage.getItem("name");
 }
 
 const profileDetails = {};
@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
   getProfile()
     .then((res) => {
       console.log(res);
-      //   profileDetails = res;
       balancelement.innerHTML = res.balance;
     })
     .catch((err) => {

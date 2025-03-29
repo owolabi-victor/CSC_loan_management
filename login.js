@@ -1,5 +1,6 @@
 async function loginRequest(data) {
-  const url = "https://866b-129-205-124-230.ngrok-free.app/api/login";
+  const baseUrl = "https://0164-102-89-23-128.ngrok-free.app";
+  const url = `${baseUrl}/api/login`;
 
   console.log(data);
 
@@ -8,6 +9,7 @@ async function loginRequest(data) {
       method: "POST", // Change to GET, PUT, DELETE if needed
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
       },
       body: JSON.stringify(data), // Convert data to JSON
     });
@@ -23,6 +25,7 @@ async function loginRequest(data) {
 
     //     // Store authentication token
     localStorage.setItem("authToken", result.token);
+    localStorage.setItem("name", result.user.name);
 
     alert("Sign in successful!");
 
