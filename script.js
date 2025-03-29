@@ -114,29 +114,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle all form submissions (general case from second script)
   const forms = document.querySelectorAll("form");
-  forms.forEach((form) => {
-    // Skip forms we've already handled specifically
-    if (
-      form.id === "loanForm" ||
-      form.id === "payLoanForm" ||
-      form.id === "airtimeForm"
-    ) {
-      return;
-    }
+  // forms.forEach((form) => {
+  //   // Skip forms we've already handled specifically
+  //   if (
+  //     form.id === "loanForm" ||
+  //     form.id === "payLoanForm" ||
+  //     form.id === "airtimeForm"
+  //   ) {
+  //     return;
+  //   }
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      // Here you would normally send the form data to your backend
-      // For this demo, we'll just close the modal
-      const modal = form.closest(".modal-overlay");
-      if (modal) {
-        modal.style.display = "none";
+  //   form.addEventListener("submit", (e) => {
+  //     e.preventDefault();
+  //     // Here you would normally send the form data to your backend
+  //     // For this demo, we'll just close the modal
+  //     const modal = form.closest(".modal-overlay");
+  //     if (modal) {
+  //       modal.style.display = "none";
 
-        // Show a success notification
-        alert("Operation successful!");
-      }
-    });
-  });
+  //       // Show a success notification
+  //       alert("Operation successful!");
+  //     }
+  //   });
+  // });
 
   // Function to add a new transaction
   function addNewTransaction(amount, purpose) {
@@ -606,7 +606,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Setup modal open buttons
   const modalConfigs = {
-    //   'takeLoanBtn': 'takeLoanModal',
+    takeLoanBtn: "takeLoanModal",
     payLoanBtn: "payLoanModal",
     buyAirtimeBtn: "buyAirtimeModal",
     // checkStatusBtn: "checkStatusModal",

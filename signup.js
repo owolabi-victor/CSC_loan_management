@@ -1,5 +1,7 @@
+import { getBaseUrl } from "./baseUrlFn.js";
+
 async function sendRequest(data) {
-  const baseUrl = "https://0164-102-89-23-128.ngrok-free.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/api/register`;
 
   try {

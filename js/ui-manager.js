@@ -136,7 +136,7 @@ export function setupNavigation() {
 export function setupModalHandlers() {
   // Setup modal open buttons
   const modalConfigs = {
-    // 'takeLoanBtn': 'takeLoanModal',
+    takeLoanBtn: "takeLoanModal",
     payLoanBtn: "payLoanModal",
     buyAirtimeBtn: "buyAirtimeModal",
     // checkStatusBtn: "checkStatusModal",

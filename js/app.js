@@ -24,6 +24,7 @@ import {
 import { setupDynamicTransactions, bankAppState } from "./balance-manager.js";
 
 import { getProfile } from "./getProfile.js";
+import { takeLoan } from "./core-endpoints.js";
 
 const inputElement = document.getElementById("userName");
 const balancelement = document.getElementById("balanceText");
@@ -169,4 +170,25 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Page not found");
     }
   };
+});
+
+//take loan
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("loanFormm");
+  const amount = document.getElementById("loanFormAmount");
+  const duration = document.getElementById("loanFormDuration");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Get input values
+    const amountValue = amount.value;
+    const durationValue = amount.value;
+
+    takeLoan({
+      loan_amount: amountValue,
+      interest_rate: 5.0,
+      repayment_plan: durationValue,
+    });
+  });
 });

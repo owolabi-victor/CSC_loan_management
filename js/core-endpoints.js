@@ -1,25 +1,18 @@
 import { getBaseUrl } from "../baseUrlFn.js";
 
-export async function getProfile() {
+export async function takeLoan(data) {
   const baseUrl = getBaseUrl();
-  const url = `${baseUrl}/api/profile`;
-
-  const token = localStorage.getItem("authToken");
-
-  console.log(token);
+  const url = `${baseUrl}/api/loans`;
 
   try {
     const response = await fetch(url, {
-      method: "GET", // Change to GET, PUT, DELETE if needed
+      method: "POST", // Change to GET, PUT, DELETE if needed
       headers: {
         "Content-Type": "application/json",
         "ngrok-skip-browser-warning": "true",
-        Authorization: `Bearer ${token}`, // Add Bearer Token
       },
-      // body: JSON.stringify(data), // Convert data to JSON
+      body: JSON.stringify(data), // Convert data to JSON
     });
-
-    console.log(response);
 
     if (!response.ok) {
       throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -30,7 +23,7 @@ export async function getProfile() {
 
     return result;
   } catch (error) {
-    // console.log("Request failed:", error);
+    console.error("Request failed:", error);
     return null;
   }
 }
