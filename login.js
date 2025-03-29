@@ -1,122 +1,65 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const togglePasswordSpan = document.querySelector('.toggle-password');
-    const rememberCheckbox = document.getElementById('remember');
-    const loginBtn = document.querySelector('.login-btn');
+async function loginRequest(data) {
+  const url = "https://866b-129-205-124-230.ngrok-free.app/api/login";
 
-    // Remove the inline onclick attribute
-    loginBtn.removeAttribute('onclick');
+  console.log(data);
 
-    // Password visibility toggle
-    togglePasswordSpan.addEventListener('click', () => {
-        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-        togglePasswordSpan.textContent = passwordInput.type === 'password' ? '👁️' : '👁️‍🗨️';
+  try {
+    const response = await fetch(url, {
+      method: "POST", // Change to GET, PUT, DELETE if needed
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), // Convert data to JSON
     });
 
-    // Login validation function
-    function validateLogin() {
-        // Get input values
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        // Check if user exists
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-
-        // Validate credentials
-        if (!storedUser) {
-            alert('No user account found. Please sign up first.');
-            return false;
-        }
-
-        if (storedUser.email !== email) {
-            alert('Email not found. Please check your email or sign up.');
-            return false;
-        }
-
-        if (storedUser.password !== password) {
-            alert('Incorrect password. Please try again.');
-            return false;
-        }
-
-        // If we reach here, credentials are correct
-        // Generate a simple authentication token
-        const authToken = `token_${Date.now()}_${Math.random().toString(36).substring(2)}`;
-        
-        // Store authentication token
-        localStorage.setItem('authToken', authToken);
-        
-        // Optional: Store user info for dashboard
-        localStorage.setItem('userEmail', email);
-
-        // Optional: Remember me functionality
-        if (rememberCheckbox.checked) {
-            localStorage.setItem('rememberedEmail', email);
-        } else {
-            localStorage.removeItem('rememberedEmail');
-        }
-
-        return true;
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
 
-    // Form submission event
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-    });
+    const result = await response.json(); // Parse response
+    console.log("Success:", result);
 
-    // Button click event 
-    loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
+    console.log(result.token);
 
-        // Check if user exists
-        const storedUser = JSON.parse(localStorage.getItem('user'));
+    //     // Store authentication token
+    localStorage.setItem("authToken", result.token);
 
-        // Validate credentials
-        if (!storedUser) {
-            alert('No user account found. Please sign up first.');
-            return;
-        }
+    alert("Sign in successful!");
 
-        if (storedUser.email !== email) {
-            alert('Email not found. Please check your email or sign up.');
-            return;
-        }
+    window.location.href = "dashboard.html";
 
-        if (storedUser.password !== password) {
-            alert('Incorrect password. Please try again.');
-            return;
-        }
+    return result;
+  } catch (error) {
+    console.error("Request failed:", error);
+    return null;
+  }
+}
 
-        // If we reach here, credentials are correct
-        // Generate a simple authentication token
-        const authToken = `token_${Date.now()}_${Math.random().toString(36).substring(2)}`;
-        
-        // Store authentication token
-        localStorage.setItem('authToken', authToken);
-        
-        // Optional: Store user info for dashboard
-        localStorage.setItem('userEmail', email);
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const togglePasswordSpan = document.querySelector(".toggle-password");
+  const rememberCheckbox = document.getElementById("remember");
+  const loginBtn = document.querySelector(".login-btn");
 
-        // Optional: Remember me functionality
-        if (rememberCheckbox.checked) {
-            localStorage.setItem('rememberedEmail', email);
-        } else {
-            localStorage.removeItem('rememberedEmail');
-        }
+  // Remove the inline onclick attribute
+  //   loginBtn.removeAttribute("onclick");
 
-        // Show success and then navigate
-        alert('Login successful!');
-        window.location.href = 'dashboard.html';
-    });
+  // Password visibility toggle
+  togglePasswordSpan.addEventListener("click", () => {
+    passwordInput.type =
+      passwordInput.type === "password" ? "text" : "password";
+    togglePasswordSpan.textContent =
+      passwordInput.type === "password" ? "👁️" : "👁️‍🗨️";
+  });
 
-    // Pre-fill remembered email if exists
-    const rememberedEmail = localStorage.getItem('rememberedEmail');
-    if (rememberedEmail) {
-        emailInput.value = rememberedEmail;
-        rememberCheckbox.checked = true;
-    }
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const emailValue = email.value;
+    const passwordValue = password.value;
+
+    loginRequest({ email: emailValue, password: passwordValue });
+  });
 });
