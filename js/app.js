@@ -26,9 +26,13 @@ import { setupDynamicTransactions, bankAppState } from "./balance-manager.js";
 import { getProfile } from "./getProfile.js";
 
 const inputElement = document.getElementById("userName");
+const balancelement = document.getElementById("balanceText");
+
 if (inputElement) {
   inputElement.innerHTML = "New Value";
 }
+
+const profileDetails = {};
 
 // Initialize transaction data globally
 window.transactionData = {
@@ -85,9 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
   getProfile()
     .then((res) => {
       console.log(res);
+      //   profileDetails = res;
+      balancelement.innerHTML = res.balance;
     })
     .catch((err) => {
-      console.log(err);
+      //   console.log(err);
     });
   setupFormHandlers();
   setupTransactionHandlers();

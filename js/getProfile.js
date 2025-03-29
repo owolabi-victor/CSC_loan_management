@@ -1,5 +1,5 @@
 export async function getProfile() {
-  const url = "https://65be-102-89-23-128.ngrok-free.app/api/profile";
+  const url = "https://0164-102-89-23-128.ngrok-free.app/api/profile";
 
   const token = localStorage.getItem("authToken");
 
@@ -10,6 +10,7 @@ export async function getProfile() {
       method: "GET", // Change to GET, PUT, DELETE if needed
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
         Authorization: `Bearer ${token}`, // Add Bearer Token
       },
       // body: JSON.stringify(data), // Convert data to JSON
